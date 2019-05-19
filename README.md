@@ -1,12 +1,12 @@
 # Redux - as basic as it gets
 
-A central concept of React is the component **state**. **State** a JavaScript object that determines how a component renders and behaves. With Redux, the state of an application is kept in a global store, allowing components to access it (on a need-to-have-basis). Redux is not the only way to manage state - on the contrary. It's a very popular pattern though, widely used in many applications and thus becomes a valuable skill for any developer in general and those working on react based applications in particular. 
+**A central concept of React is the component “state” — a JavaScript object that determines how a component renders and behaves. With Redux, the state of an application is kept in a global store, allowing components to access it (on a need-to-have-basis). Redux is not the only way to manage state — on the contrary. It’s a very popular pattern though, widely used in many applications and thus becomes a valuable skill for any developer in general and those working on react based applications in particular.**
 
-There are plenty of resources out there on how to get started with Redux. So why write yet another one. In my work as a coach at a coding bootcamp, I get to introduce junior developers to a lot of programming concepts - state management with Redux being one of them. And to be honest, I find Redux hard to explain. I sat down to write this post becouse I wanted to scale down on complexity and create a step-by-step introduction to Redux that would make my job easier. 
+There are plenty of resources out there on how to get started with Redux. So why write yet another one. In my work as a coach at a coding bootcamp, I get to introduce junior developers to a lot of programming concepts — state management with Redux being one of them. And to be honest, I find Redux hard to explain. I sat down to write this post because I wanted to scale down on complexity and create a step-by-step introduction to Redux that would make my job easier.
 
-This is **not** a in-depth dive into Redux - this is a Hello World post. Hello World is where we all get started. 
+**This is not an in-depth dive into Redux — this is a Hello World post. Hello World is where we all get started.**
 
-Let's get after it.
+Let’s get after it.
 
 ## Part 1 - Hello World
 
@@ -25,9 +25,9 @@ $ cd learning_redux_demo
 $ code .
 ```
 
-I would also suggest that you fire up the development server and take a look at your app in the browser. You can actually keep it running while you make changes to your code for the most part. The hot reloading allows you to do that and instantly see your changes come across in the browser. For the most part anyway. Sometimes you DO have to restart your server, so please keep that in mind. More on that later.
+I would also suggest that you fire up the development server and take a look at your app in the browser. You can actually keep it running while you make changes to your code for the most part. The hot reloading allows you to do that and instantly see your changes come across in the browser. For the most part anyway (sometimes you DO have to restart your server, so please keep that in mind).
 
-I usually take a moment to clean up the scaffolded code. IMO, we should always keep our code base clean and avoid having too many files if we don't need them. I get rid of some of the `css` and `test` files, as well as the `svg` file with the spinning React logo. I suggest that you do the same. As a personal preference, I also change the suffix on the `App` component to `.jsx`. 
+I usually take a moment to clean up the scaffolded code. IMO, we should always keep our code base clean and avoid having too many files if we don’t need them. I also get rid of some of the `css` and `test` files, as well as the `svg` file with the spinning React logo. I suggest that you do the same. As a personal preference, I also change the suffix on the `App` component to `.jsx`. 
 
 Your folder and file structure should look something like this:
 
