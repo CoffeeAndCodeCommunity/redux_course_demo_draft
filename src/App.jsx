@@ -14,13 +14,13 @@ const App = (props) => {
       <Container>
         <Header as='h1'>{props.state.greeting}</Header>
         <Input
-          placeholder='Greeting...'
-          onChange={(event) => props.dispatch({ type: 'SET_NEW_GREETING', greeting: event.target.value })}
+          placeholder='New greeting...'
+          onBlur={(event) => props.dispatch({ type: 'SET_NEW_GREETING', greeting: event.target.value })}
         />
         <Button
           primary
-          // onClick={changeGreeting.bind(this, 'text')}
-          onClick={() => props.dispatch({ type: 'CHANGE_GREETING', greeting: 'New greeting' })}
+          // onClick={changeGreeting.bind(this)}
+          onClick={() => props.dispatch({ type: 'CHANGE_GREETING' })}
         >
           Change greeting
         </Button>
