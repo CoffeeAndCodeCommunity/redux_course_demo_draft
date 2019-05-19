@@ -1,68 +1,117 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Walkthrough
 
-## Available Scripts
+### Getting Started - Hello World
 
-In the project directory, you can run:
+Create a new application using the `create-react-app` script. I'm using `yarn` so the command is slightly different than theone you might be used to if you are a `npm` user.
 
-### `npm start`
+```
+$ yarn create react-app learning_redux_demo
+```
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Make sure to `cd` into your newly created application folder and open your application in your code editor. I'm using VSCode with CLI commands enabled, so I can open my project with a single terminal command:
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+```
+$ cd learning_redux_demo
+$ code .
+```
 
-### `npm test`
+I would also suggest that you fire up the development server and take a look at your app in the browser. You can actually keep it running while you make changes to your code for the most part. The hot reloding allows you to do that and instantly see your changes come across in thee browser. For most part anyway. Sometimes you DO have to restart your server, so please keep that in mind. More on that later.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+I usually take a moment to clean up the scaffolded code. IMO, we should always keep our code base clean and avoid having too many files if we don't need them. I get rid of some of the `css` and `test` files, as well as the `svg` file with the spinning React logo. I suggest that you do the same. As a personal preference, I also change the suffix on the `App` component to `.jsx`. 
 
-### `npm run build`
+Your folder and file structure should look somethiing like this:
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+├── README.md
+├── node_modules
+├── package.json
+├── public
+│   ├── favicon.ico
+│   ├── index.html
+│   └── manifest.json
+├── src
+│   ├── App.jsx
+│   ├── index.css
+│   ├── index.js
+│   └── serviceWorker.js
+└── yarn.lock
+```
+You will note a few errors in your browser as you delete the files. That is, of course, caused by the imports in your `index.js` and `App.jsx`. Make sure that none of the deleted files are being imported in any of these two files. At this stage, I usually also clean up the returned `jsx` by the `App` component.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+```javascript
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+// src/index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
 
-### `npm run eject`
+ReactDOM.render(<App />, document.getElementById('root'));
+serviceWorker.unregister();
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```javascript
+// src/App.jsx
+import React from 'react';
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+function App() {
+  return (
+    <>
+      <h1>
+        Hello World
+      </h1>
+    </>
+  );
+}
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+export default App;
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+**At this stage, we have a "Hello World" application, up and running. So far, so good.**
 
-## Learn More
+## CSS
+We will use Semanic-UI for React to add some styling to our application. You can, of course choose any other CSS framework or totally omit the styling part if you want. I really like the SemanticUI library and the available wroapper for React, so I'll go ahead and use it in this demo.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+I'll start by adding the dependencies  using `yarn`:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+$ yarn add semantic-ui-react semantic-ui-css
+```
 
-### Code Splitting
+And as the next step, I'll make the css available in the entry point of the app (`src/index.js`) and import some of the components to my `App` component.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+```javascript
+// src/index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import 'semantic-ui-css/semantic.min.css';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
 
-### Analyzing the Bundle Size
+ReactDOM.render(<App />, document.getElementById('root'));
+serviceWorker.unregister();
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+```javascript
+// src/App.jsx
+import React from 'react';
+import {Container, Header} from 'semantic-ui-react'
 
-### Making a Progressive Web App
+function App() {
+  return (
+    <>
+      <Container>
+        <Header as='h1'>Hello World</Header>
+      </Container>
+    </>
+  );
+}
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+export default App;
+```
 
-### Advanced Configuration
+** Now, the "Hello World" app has been extended with some css components...**
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
 
-### Deployment
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
 
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
