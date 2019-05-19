@@ -15,7 +15,7 @@ const App = (props) => {
         <Header as='h1'>{props.state.greeting}</Header>
         <Input
           placeholder='New greeting...'
-          onBlur={(event) => props.dispatch({ type: 'SET_NEW_GREETING', greeting: event.target.value })}
+          onBlur={(event) => props.dispatch({ type: 'PROPOSE_GREETING', greeting: event.target.value })}
         />
         <Button
           primary
