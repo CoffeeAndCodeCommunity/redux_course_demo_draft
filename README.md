@@ -31,7 +31,6 @@ Your folder and file structure should look somethiing like this:
 │   └── manifest.json
 ├── src
 │   ├── App.jsx
-│   ├── index.css
 │   ├── index.js
 │   └── serviceWorker.js
 └── yarn.lock
@@ -54,7 +53,7 @@ serviceWorker.unregister();
 // src/App.jsx
 import React from 'react';
 
-function App() {
+const App = () => { {
   return (
     <>
       <h1>
@@ -72,7 +71,7 @@ export default App;
 ## CSS
 We will use Semanic-UI for React to add some styling to our application. You can, of course choose any other CSS framework or totally omit the styling part if you want. I really like the SemanticUI library and the available wroapper for React, so I'll go ahead and use it in this demo.
 
-I'll start by adding the dependencies  using `yarn`:
+I'll start by adding the dependencies using `yarn`:
 
 ```
 $ yarn add semantic-ui-react semantic-ui-css
@@ -97,7 +96,7 @@ serviceWorker.unregister();
 import React from 'react';
 import {Container, Header} from 'semantic-ui-react'
 
-function App() {
+const App = () => { {
   return (
     <>
       <Container>
@@ -110,8 +109,162 @@ function App() {
 export default App;
 ```
 
-** Now, the "Hello World" app has been extended with some css components...**
+**Now, the "Hello World" app has been extended with some css components...**
+
+## Hello World from Redux
+Okay, so here's what we came for. We want to manage the state of our application using Redux. 
+
+We will add two libraries to our application. `redux` and `react-redux`. 
+
+```
+$ yarn add redux react-redux
+```
+
+As the next step, we want to set up a folder and file structure for the Redux configuration. You know the commands to create files and folders, so  I'll just show what we want the structure of the `src` folder to look like: 
+
+```
+src/
+├── App.jsx
+├── index.js
+├── serviceWorker.js
+└── state
+    ├── reducers
+    │   └── rootReducer.js
+    └── store
+        ├── configureStore.js
+        └── initialState.js
+```
+
+Let's start with the initial state. We want to set a default greeting when we start the application. We can do that by setting a initial state:
+
+```javascript
+// src/state/store/initialState.js
+const initialState = {
+  greeting: 'Hello World from Redux'
+}
+export default initialState
+```
+
+As the next step, we will create a sipmle reducer that will load the initial state and return it to whomever asks/subscribes to it:
+
+```javascript
+import initialState from '../store/initialState'
+
+const rootReducer = (state = initialState) => {
+  return state
+}
+
+export default rootReducer
+```
+
+And finally, we will setup and configure store:
+
+```javascript
+// src/state/store/configureStore.js
+import { createStore } from 'redux';
+import rootReducer from '../reducers/rootReducer'
+
+const configureStore = () => {
+  return createStore(rootReducer);
+}
+
+export default configureStore
+```
+
+In order to check if we are good to go,we will need to connect our application to Redux. That's our next mission.
 
 
+## Connect to Redux
 
+As the next step, we need to connect our application to the Redux store. We will do that in our entry point (`src/index.js`) by importing the store configuration (from `src/state/store/configureStore.js`) and making use of the `Provider` component from `react-redux`. The `<Provider />`component makes the Redux store available to any nested components. Please note the omports and the usage of the `configureStore()`in the code below.
+
+```javascript
+// scr/index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import 'semantic-ui-css/semantic.min.css';
+import { Provider } from 'react-redux'
+import configureStore from './state/store/configureStore';
+import App from './App.jsx';
+import * as serviceWorker from './serviceWorker';
+
+const store = configureStore();
+
+ReactDOM.render(
+  <Provider store={store}>
+      <App />
+  </Provider>,
+  document.getElementById('root')
+);
+serviceWorker.unregister();
+```
+
+
+We can add a bit of code that will allow us perform a manual test and check if the initial state is being set. Add the following line too `src/index.js`, right after the line where we create the `store` object.
+
+```javascript
+window.store = store
+```
+
+Now, head over to the browser and open the console in your developer tools. execute the following command to get hold of the initial application state:
+
+```
+window.store.getState()
+```
+
+![](./readme_assets/redux_window_store.png) 
+
+Awesome stuff! There's only one thing left for us to do, and that is to connect the `App` component to the store and display the greeting.
+
+## State to props
+
+In order to connect our `App` component to Redux, we have to use the `connect()` module from `react-redux`. Think of `connect()` as the bridge or interface between the component and the Redux store. We need to import it first:
+
+```javascript
+import { connect } from 'react-redux';
+```
+
+and, we need to modify the default export of the component:
+
+```javascript
+export default connect()(App)
+```
+
+So far so good, but we're not quite there yet. We need to make sure that our `App` component get the state in form of `props`. Enter the `mapStateToProps` function.  `mapStateToProps` is a filter that allows us to select what part of data stored in Redux store should be made available as component properties. There are some basic things we need to know about this function:
+
+* It is called **every time the store state changes**.
+* It receives the **entire store state**, and should return the data needed by the component.
+
+Alright, let's use `mapStateToProps` in our own `App` component. Add this function outside the class but just above the `export`:
+
+```javascript
+// src/App.jsx
+
+const mapStateToProps = (state) => {
+  return {
+    state: state
+  }
+}
+```
+
+This will create a `prop` called `state` and include our `greeting`. Now, we can use that to display our greeting on the page:
+
+```javascript
+const App = (props) => { {
+  return (
+    <>
+      <Container>
+        <Header as='h1'>{props.state.greeting}</Header>
+      </Container>
+    </>
+  );
+}
+```
+
+Remember to allow your `App` component to recieve an argument (`props`). 
+
+## Wrap up
+There's room for refactoring of the presented code. There always is. But let's focus on what we achieved at this stage. We've added a basic Redux configuration and connected it to our React application. 
+
+In the next part, we'll take a look at how we can change the greeting and get even smarter. 
 
